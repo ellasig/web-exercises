@@ -1,4 +1,18 @@
 {
+  "name": "webkurssi",
+  "version": "0.0.1",
+  "description": "exercise",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "docs": "mkdir docs && touch docs/readme.md",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ellasig <ellasi@metropolia.fi>",
+  "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.21"
   }
