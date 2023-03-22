@@ -45,7 +45,7 @@ const postUser = (req,res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.passwd
-    };
+    }
     users.push(newUser);
     res.status(201).send("Added user " + req.body.name)
 };

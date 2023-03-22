@@ -35,11 +35,13 @@ const getCat =  (req, res) => {
 */
 
 const postCat = (req,res) => {
-    console.log(req.body);
+    console.log("Posting cat" ,req.body, req.file);
     const newCat = req.body;
+    newCat.filename = 'http://localhost:3000/' + req.file.path;
     cats.push(newCat);
-    res.send("Trying to add cat with name " + req.body.name)
-}
+    //send response if upload is successful
+    res.status(201).send("new cat added");
+};
 
 const putCat = (req, res) => {
     const id = req.params.catId;
@@ -51,11 +53,11 @@ const putCat = (req, res) => {
         weight: req.params.weight,
         owner: req.params.owner,
         filename: req.params.filename,
-    }
+    };
     cats[cat] = updateCat
     res.json("Cat info updated")
 
-}
+};
 
 const deleteCat = (req, res) => {
 

@@ -14,6 +14,8 @@ app.use((req, res, next) => {
 
 //Serve example-ui
 app.use(express.static('example-ui'));
+//server uploaded files
+app.use('/uploads', express.static('uploads'))
 
 //add cors headers using cors middleware
 app.use(cors());
