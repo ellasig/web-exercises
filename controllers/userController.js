@@ -1,6 +1,7 @@
 'use strict';
 const userModel = require('../models/userModel');
 
+//TODO: ADD DB CONNECTIONS and functions to usermodel
 const users = userModel.users;
 //remove passwords
 for (const user of users) {
@@ -49,6 +50,8 @@ const postUser = (req,res) => {
     users.push(newUser);
     res.status(201).send("Added user " + req.body.name)
 };
+
+
 
 const putUser = (req, res) => {
     const id = req.params.userId;
