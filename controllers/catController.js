@@ -37,11 +37,12 @@ const getCat = async (req, res) => {
 
 
 
-const postCat = (req,res) => {
+const postCat = async (req,res) => {
     console.log("Posting cat" ,req.body, req.file);
     const newCat = req.body;
-    newCat.filename = 'http://localhost:3000/' + req.file.path;
-    cats.push(newCat);
+    newCat.filename = req.file.path;
+    //TODO: add try-catch
+    const result = await catModel.insertCat(newCat)
     //send response if upload is successful
     res.status(201).send("new cat added");
 };
@@ -49,7 +50,15 @@ const postCat = (req,res) => {
 
 
 
-const putCat = (req, res) => {
+const putCat = async (req, res) => {
+    console.log("Modifying a cat" ,req.body);
+    //TODO: add try-catch
+    const cat = req.body;
+    const result = await catModel.modifyCat(req.body);
+    //send response if upload is successful
+    res.status(200).send("Cat modified");
+};
+    /*
     const id = req.params.catId;
     const cat = cats.find(cat => cat.id == id)
     const updateCat = {
@@ -63,11 +72,17 @@ const putCat = (req, res) => {
     cats[cat] = updateCat
     res.json("Cat info updated")
 
+};*/
+
+
+const deleteCat = async (req, res) => {
+    console.log("Deleting a cat" ,req.params.catId);
+    //TODO: add try-catch
+    const cat = req.body;
+    const result = await catModel.deleteCat(req.params.catId);
+    //send response if upload is successful
+    res.status(200).send("Cat deleted");
 };
-
-const deleteCat = (req, res) => {
-
-}
 
 
 const catController = {getCatList, getCat, postCat, putCat, deleteCat};
