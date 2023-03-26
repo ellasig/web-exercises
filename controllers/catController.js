@@ -58,21 +58,6 @@ const putCat = async (req, res) => {
     //send response if upload is successful
     res.status(200).send("Cat modified");
 };
-    /*
-    const id = req.params.catId;
-    const cat = cats.find(cat => cat.id == id)
-    const updateCat = {
-        id: cats[cat].id,
-        name: req.params.name,
-        birthdate: req.params.birthdate,
-        weight: req.params.weight,
-        owner: req.params.owner,
-        filename: req.params.filename,
-    };
-    cats[cat] = updateCat
-    res.json("Cat info updated")
-
-};*/
 
 
 const deleteCat = async (req, res) => {

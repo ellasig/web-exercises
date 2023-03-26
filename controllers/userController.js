@@ -1,5 +1,6 @@
 'use strict';
 const userModel = require('../models/userModel');
+const catModel = require("../models/catModel");
 
 //TODO: ADD DB CONNECTIONS and functions to usermodel
 const users = userModel.users;
@@ -12,17 +13,22 @@ const getUserList = (req, res) => {
     res.json(users);
 };
 
-const getUser =  (req, res) => {
-    const id = req.params.userId;
-    //TODO: filter matching cat based on id
-    //TODO: response 404 if id not found in array (res.status(404))
-    const user = users.find(user => user.id === id);
-    if(!user) {
-        res.status(404).send("user not found")
+const getUser =  async (req, res) => {
+    const userId = Number(req.params.userId);
+    if(!Number.isInteger(userId)) {
+        res.status(400).json({error: 500, message: 'invalid id'});
         return;
     }
-    res.json(user);
-}
+    // TODO: wrap to try-catch
+    const [user] = await userModel.getUserById(userId);
+    console.log('getUser', user);
+
+    if(user) {
+        res.json(user);
+    } else {
+        res.status(404).json({message: "User not found."})
+    }
+};
 
 /* vaihtoehto 2 getCat
     const id.req.params.catId
@@ -40,6 +46,7 @@ const getUser =  (req, res) => {
     };
 */
 
+//TODO: muokkaa postuser
 const postUser = (req,res) => {
     console.log("req body: " , req.body);
     const newUser = {
@@ -53,23 +60,23 @@ const postUser = (req,res) => {
 
 
 
-const putUser = (req, res) => {
-    const id = req.params.userId;
-    const user = users.find(user => user.id === id)
-    const updateUser = {
-        id: users[user].id,
-        name: req.params.name,
-        email: req.params.email,
-        password: req.params.password
+const putUser = async (req, res) => {
+    console.log("Modifying a user" ,req.body);
+    //TODO: add try-catch
+    const user = req.body;
+    const result = await userModel.modifyUser(req.body);
+    //send response if upload is successful
+    res.status(200).send("User modified");
 
-    }
-    users[user] = updateUser
-    res.json("User info updated")
+};
 
-}
-
-const deleteUser = (req, res) => {
-
+const deleteUser = async (req, res) => {
+    console.log("Deleting a user" ,req.params.userId);
+    //TODO: add try-catch
+    const user = req.body;
+    const result = await userModel.deleteUser(req.params.userId);
+    //send response if upload is successful
+    res.status(200).send("User deleted");
 }
 
 
