@@ -1,12 +1,10 @@
 'use strict';
 const catModel = require('../models/catModel');
 
-
+/*
 const getCatList = async (req, res) => {
     try {
         let cats = await catModel.getAllCats();
-        //convert ISO date to date only
-        //should this be done in the front-end side?
         cats = cats.map(cat => {
             cat.birthdate = cat.birthdate.toISOString().split('T')[0];
             return cat;
@@ -15,11 +13,50 @@ const getCatList = async (req, res) => {
     } catch (error) {
         res.status(500).json({error: 500, message: error.message});
     }
+};*/
+const getCatList = async (req, res) => {
+    try {
+        let cats = await catModel.getAllCats();
+        // convert ISO date to date only
+        // should this be done on the front-end side??
+        console.log('cats',cats)
+        cats.map(cat => {
+            cat.birthdate = cat.birthdate.toISOString().split('T')[0];
+            return cat;
+        });
+        res.json(cats);
+    }
+    catch (error) {
+        res.status(500).json({error: 500, message: error.message});
+    }
 };
 
 const getCat = async (req, res) => {
+    //console.log(req.params);
     //convert id value to number
-    const id = Number(req.params.id);
+    const catId = Number(req.params.id);
+    // check if number is not an integer
+    if (!Number.isInteger(catId)) {
+        res.status(400).json({error: 500, message: "invalid id"});
+        return;
+    }
+    // TODO: wrap to try-catch
+    const [cat] = await catModel.getCatById(catId);
+    console.log("get cat", cat);
+    //TODO: filter matching cat based on id
+    // TODO: response 404 if id not found in array (res.status(404))
+    if (cat) {
+        res.json(cat);
+    } else
+    {
+        //res.status(404).send("Cat not found");
+        res.status(404).json({message: 'cat not found'})
+    }
+};
+/*
+const getCat = async (req, res) => {
+    //convert id value to number
+    const catId = Number(req.params.id);
     //check if number is not an integer
     if(!Number.isInteger(caId)) {
         res.status(400).json({error: 500, message: 'invalid id'});
@@ -35,7 +72,7 @@ const getCat = async (req, res) => {
         res.status(404).json({message: "cat not found."})
     }
 
-};
+};*/
 
 const postCat = async (req,res) => {
     console.log("Posting cat" ,req.body, req.file);
