@@ -18,21 +18,25 @@ const getCatList = async (req, res) => {
 };
 
 const getCat = async (req, res) => {
-    //convert id value to number
-    const id = Number(req.params.id);
-    //check if number is not an integer
-    if(!Number.isInteger(caId)) {
-        res.status(400).json({error: 500, message: 'invalid id'});
-        return;
-    }
-    // TODO: wrap to try-catch
-    const [cat] = await catModel.getCatById(catId);
-    console.log('getCat', cat);
+    try {
+        //convert id value to number
+        const catId = Number(req.params.catId);
+        //check if number is not an integer
+        if (!Number.isInteger(caId)) {
+            res.status(400).json({error: 500, message: 'invalid id'});
+            return;
+        }
+        const [cat] = await catModel.getCatById(catId);
+        console.log('getCat', cat);
 
-    if(cat) {
-        res.json(cat);
-    } else {
-        res.status(404).json({message: "cat not found."})
+        if (cat) {
+            res.json(cat);
+        } else {
+            res.status(404).json({message: "cat not found."})
+        }
+    } catch (error) {
+        console.error("error", error.message);
+        res.status(500).json({error: 500, message: "sql query failed"})
     }
 
 };
@@ -66,9 +70,9 @@ const putCat = async (req, res) => {
 
 
 const deleteCat = async (req, res) => {
-    console.log("Deleting a cat" ,req.params.id);
+    console.log("Deleting a cat" ,req.params.catId);
     try {
-        const result = await catModel.deleteCat(req.params.id);
+        const result = await catModel.deleteCat(req.params.catId);
         res.status(200).json({message: "Cat deleted"});
     } catch (error) {
         res.status(500).json({error: 500, message: error.message});

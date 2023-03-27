@@ -16,7 +16,7 @@ router.route('/')
     .put(catController.putCat)
 
 //All /cat/:id endpoints
-router.route('/:id')
+router.route('/: catId')
     .get(catController.getCat)
     .delete(catController.deleteCat);
 
