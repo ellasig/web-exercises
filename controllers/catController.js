@@ -20,9 +20,9 @@ const getCatList = async (req, res) => {
 const getCat = async (req, res) => {
     try {
         //convert id value to number
-        const catId = Number(req.params.catId);
+        const catId = Number(req.params.id);
         //check if number is not an integer
-        if (!Number.isInteger(caId)) {
+        if (!Number.isInteger(catId)) {
             res.status(400).json({error: 500, message: 'invalid id'});
             return;
         }
@@ -57,7 +57,7 @@ const postCat = async (req,res) => {
 
 
 const putCat = async (req, res) => {
-    console.log("Modifying a cat" ,req.body);
+    //console.log("Modifying a cat" ,req.body);
     const cat = req.body;
     try {
         const result = await catModel.modifyCat(cat);

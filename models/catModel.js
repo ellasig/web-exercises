@@ -18,7 +18,7 @@ const getCatById = async (id) => {
   try {
     const sql = `SELECT wop_cat.*, wop_user.name as ownername FROM wop_cat 
                  LEFT JOIN wop_user ON wop_cat.owner = wop_user.user_id 
-                 where cat_id = ${id}`;
+                 where cat_id = ?`;
     const [rows] = await promisePool.query(sql,[id]);
     return rows;
   } catch (e) {
@@ -54,7 +54,6 @@ const modifyCat = async (cat) => {
       cat.name,
       cat.weight,
       cat.owner,
-      cat.filename,
       cat.birthdate,
       cat.id
     ]);
