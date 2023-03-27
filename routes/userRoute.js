@@ -5,6 +5,8 @@ const userController = require('../controllers/userController');
 
 module.exports = router;
 
+//TODO: add validation &
+
 //router yhdistää reitit
 router.route('/')
     .get(userController.getUserList)

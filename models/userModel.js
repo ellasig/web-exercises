@@ -27,14 +27,12 @@ const getUserById = async (id) => {
 
 const insertUser = async (user) => {
   try {
-    const sql = `INSERT INTO wop_user VALUES (?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO wop_user VALUES (?, ?, ?, ?, 1)`;
     const [rows] = await promisePool.query(sql,[
       null,
       user.name,
       user.email,
-      user.password,
-      //TODO: TULEEKO ROLE TÄHÄN?
-      user.role
+      user.passwd
     ]);
     return rows;
   } catch (e) {
@@ -46,15 +44,12 @@ const insertUser = async (user) => {
 
 const modifyUser = async (user) => {
   try {
-    // TODO: add sql UPDATE
-    const sql = `UPDATE wop_user SET name=?, email=?, password=?, role=?  
+    const sql = `UPDATE wop_user SET name=?, email=?, password=? 
                  where user_id=?`;
     const [rows] = await promisePool.query(sql,[
       user.name,
       user.email,
-      user.password,
-      //TODO: TULEEKO ROLE TÄHÄN?
-      user.role,
+      user.passwd,
       user.id
     ]);
     return rows;

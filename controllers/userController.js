@@ -28,16 +28,16 @@ const getUser =  async (req, res) => {
 };
 
 
-//TODO: muokkaa postuser
-const postUser = (req,res) => {
-    console.log("req body: " , req.body);
-    const newUser = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.passwd
+const postUser = async (req,res) => {
+    try {
+        console.log("req body: ", req.body);
+        const newUser = req.body;
+        const result = await userModel.insertUser(newUser);
+        res.status(201).json({message:"Added user added!"})
+    } catch (error) {
+        console.error("error", error.message);
+        res.status(500).json({error: 500, message: "SQL insert user failed"});
     }
-    users.push(newUser);
-    res.status(201).send("Added user " + req.body.name)
 };
 
 
@@ -46,9 +46,8 @@ const putUser = async (req, res) => {
     console.log("Modifying a user" ,req.body);
     //TODO: add try-catch
     const user = req.body;
-    const result = await userModel.modifyUser(req.body);
-    //send response if upload is successful
-    res.status(200).send("User modified");
+    const result = await userModel.modifyUser(user);
+    res.status(200).json({message: "User modified"});
 
 };
 

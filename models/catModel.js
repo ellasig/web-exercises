@@ -54,7 +54,6 @@ const modifyCat = async (cat) => {
       cat.name,
       cat.weight,
       cat.owner,
-      cat.filename,
       cat.birthdate,
       cat.id
     ]);
