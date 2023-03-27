@@ -6,16 +6,15 @@ const userController = require('../controllers/userController');
 module.exports = router;
 
 //router yhdistää reitit
-router.get('/', userController.getUserList);
-router.get('/:userId', userController.getUser);
+router.route('/')
+    .get(userController.getUserList)
+    .post(userController.postUser)
+    .put(userController.putUser)
 
-router.post('/', userController.postUser);
-router.put('/', userController.putUser);
-router.delete('/:userId', userController.deleteUser);
+router.route('/:userId')
+    .get(userController.getUser)
+    .delete(userController.deleteUser);
 
-
-
-//TODO: add user/:id and other endpoints needed
 
 
 

@@ -4,9 +4,7 @@ const promisePool = pool.promise();
 
 const getAllUsers = async () => {
   try {
-    // TODO: SQL kysely
-    const sql = `SELECT wop_user.*, FROM wop_user `;
-    ;
+    const sql = `SELECT user_id, name, email, password FROM wop_user `;
     const [rows] = await promisePool.query(sql);
     return rows;
   } catch (e) {
@@ -18,7 +16,7 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
   try {
     // TODO: SQL KYSELY
-    const sql = `SELECT wop_user`;
+    const sql = `SELECT user_id from wop_user`;
     const [rows] = await promisePool.query(sql,[id]);
     return rows;
   } catch (e) {

@@ -4,7 +4,6 @@ const promisePool = pool.promise();
 
 const getAllCats = async () => {
   try {
-    // do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const sql = `SELECT wop_cat.*, wop_user.name as ownername FROM wop_cat 
                  LEFT JOIN wop_user ON wop_cat.owner = wop_user.user_id`;
     const [rows] = await promisePool.query(sql);
@@ -49,7 +48,6 @@ const insertCat = async (cat) => {
 
 const modifyCat = async (cat) => {
   try {
-    // TODO: add sql UPDATE
     const sql = `UPDATE wop_cat SET name=?, weight=?, owner=?, birthdate=?  
                  where cat_id=?`;
     const [rows] = await promisePool.query(sql,[

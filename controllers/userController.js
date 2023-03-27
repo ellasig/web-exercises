@@ -1,18 +1,15 @@
 'use strict';
 const userModel = require('../models/userModel');
-const catModel = require("../models/catModel");
 
-//TODO: ADD DB CONNECTIONS and functions to usermodel
-const users = userModel.users;
-//remove passwords
-for (const user of users) {
-    delete user.password;
-}
-
-const getUserList = (req, res) => {
-    res.json(users);
+const getUserList = async (req, res) => {
+    try {
+        const users = await userModel.getAllUsers();
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 };
-
+//TODO: UPDATE for new user model (check cat controller)
 const getUser =  async (req, res) => {
     const userId = Number(req.params.userId);
     if(!Number.isInteger(userId)) {
@@ -30,21 +27,6 @@ const getUser =  async (req, res) => {
     }
 };
 
-/* vaihtoehto 2 getCat
-    const id.req.params.catId
-    const filteredCats = cats.filter(cat => id == cat.id);
-    //TODO: Remove password
-    if(filteredCats.lengts > 0) {
-        res.json(filteredCats[0];
-        } else {
-            res.status(404).send("Cat not found")
-            !!voi myös laittaa json muodossa;
-           -> res.status(404).json({message: "cat not found."})
-        }
-    const cat = filteredCat[0];
-    res.json(cat);
-    };
-*/
 
 //TODO: muokkaa postuser
 const postUser = (req,res) => {
@@ -80,5 +62,6 @@ const deleteUser = async (req, res) => {
 }
 
 
-const userController = {getUserList, getUser, postUser, putUser, deleteUser};
+const userController = {
+    getUserList, getUser, postUser, putUser, deleteUser};
 module.exports = userController;

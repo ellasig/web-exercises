@@ -1,7 +1,6 @@
 'use strict';
 const express = require('express');
 const multer = require("multer");
-
 const router = express.Router();
 const catController = require('../controllers/catController');
 
@@ -9,14 +8,16 @@ const catController = require('../controllers/catController');
 const upload = multer({dest: 'uploads/'});
 
 
-module.exports = router;
-
 //router yhdistää reitit
-router.get('/', catController.getCatList);
-router.get('/:catId', catController.getCat);
+//Root of the cat endpoint
+router.route('/')
+    .get(catController.getCatList)
+    .post(upload.single('cat'),catController.postCat)
+    .put(catController.putCat)
 
-router.post('/', upload.single('cat'),catController.postCat);
-router.put('/', catController.putCat);
-router.delete('/:catId', catController.deleteCat);
+//All /cat/:id endpoints
+router.route('/:id')
+    .get(catController.getCat)
+    .delete(catController.deleteCat);
 
-
+module.exports = router;
