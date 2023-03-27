@@ -97,12 +97,13 @@ const putCat = async (req, res) => {
 
 
 const deleteCat = async (req, res) => {
-    console.log("Deleting a cat" ,req.params.id);
+    //console.log("Deleting a cat" ,req.params.id);
     try {
-        const result = await catModel.deleteCat(req.params.id);
+        const id = req.params.id;
+        const result = await catModel.deleteCat(id);
         res.status(200).json({message: "Cat deleted"});
     } catch (error) {
-        res.status(500).json({error: 500, message: error.message});
+        res.status(500).json({error: 500, message: "sql delete car failed!"});
     }
 };
 
