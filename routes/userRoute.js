@@ -2,16 +2,24 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const {body} = require('express-validator');
 
 module.exports = router;
 
-//TODO: add validation
 
 //router yhdistää reitit
 router.route('/')
     .get(userController.getUserList)
-    .post(userController.postUser)
-    .put(userController.putUser)
+    .post(
+            body('name').isAlphanumeric().isLength({min: 1, max: 200}).escape().trim(),
+            body('email').isEmail(),
+            body('passwd').isLength({min: 8}),
+        userController.postUser)
+    .put(
+        body('name').isAlphanumeric().isLength({min: 1, max: 200}),
+        body('email').isEmail(),
+        body('passwd').isLength({min: 8})
+        ,userController.putUser)
 
 router.route('/:userId')
     .get(userController.getUser)
