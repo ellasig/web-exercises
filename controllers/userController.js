@@ -16,7 +16,6 @@ const getUser =  async (req, res) => {
         res.status(400).json({error: 500, message: 'invalid id'});
         return;
     }
-    // TODO: wrap to try-catch
     const [user] = await userModel.getUserById(userId);
     console.log('getUser', user);
 
