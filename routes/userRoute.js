@@ -21,10 +21,11 @@ router.route('/')
         body('passwd').isLength({min: 8})
         ,userController.putUser)
 
+router.get('/token', userController.checkToken);
+
 router.route('/:userId')
     .get(userController.getUser)
     .delete(userController.deleteUser);
-
 
 
 

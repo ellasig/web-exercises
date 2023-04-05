@@ -1,6 +1,7 @@
 "use strict";
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+require("dotenv").config();
 
 const login = (req, res) => {
 
@@ -17,8 +18,9 @@ const login = (req, res) => {
                 res.json({message: err});
             }
             // generate a signed son web token with the contents of user object and return it in the response
-            const token = jwt.sign(user, 'your_jwt_secret');
+            const token = jwt.sign(user, process.env.JWT_SECRET);
             //TODO: do you really need to include whole user to token payload? esim user.email
+            //NOTE: at least password should removed
             return res.json({user, token});
         });
     })(req, res);

@@ -61,6 +61,7 @@ const postCat = async (req,res) => {
         });
         return;
     }
+    //TODO: USE req.user to add correct owner id
     try {
         const newCat = req.body;
         newCat.filename = req.file.filename;
@@ -76,6 +77,8 @@ const postCat = async (req,res) => {
 
 const putCat = async (req, res) => {
     //console.log("Modifying a cat" ,req.body);
+
+
     const validationErrors = validationResult(req);
     if(!validationErrors.isEmpty()) {
         res.status(400).json({
@@ -86,6 +89,9 @@ const putCat = async (req, res) => {
         return;
     }
     const cat = req.body;
+    //TODO: before modigying a cat you should check that user is the owner of
+    //that specific cat(req.user.user_id == cat.owner) Can be done in catmodel
+
     try {
         const result = await catModel.modifyCat(cat);
         //send response if upload is successful

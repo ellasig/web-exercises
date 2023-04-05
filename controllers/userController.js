@@ -9,6 +9,7 @@ const getUserList = async (req, res) => {
         res.status(500).json({message: error.message})
     }
 };
+
 //TODO: UPDATE for new user model (check cat controller)
 const getUser =  async (req, res) => {
     const userId = Number(req.params.userId);
@@ -60,6 +61,11 @@ const deleteUser = async (req, res) => {
 }
 
 
+const checkToken = (req, res) => {
+    res.json({user: req.user});
+};
+
+
 const userController = {
-    getUserList, getUser, postUser, putUser, deleteUser};
+    getUserList, getUser, postUser, putUser, deleteUser, checkToken};
 module.exports = userController;
