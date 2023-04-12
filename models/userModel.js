@@ -2,6 +2,7 @@
 const pool = require("../database/db");
 const promisePool = pool.promise();
 
+
 const getAllUsers = async () => {
   try {
     const sql = `SELECT user_id, name, email, password FROM wop_user `;
@@ -26,19 +27,17 @@ const getUserById = async (id) => {
 
 const insertUser = async (user) => {
   try {
-    const sql = `INSERT INTO wop_user VALUES (?, ?, ?, ?, 1)`;
-    const [rows] = await promisePool.query(sql,[
-      null,
-      user.name,
-      user.email,
-      user.passwd
-    ]);
-    return rows;
+    const sql = 'INSERT INTO wop_user VALUES (null, ?, ?, ?, ?)';
+    const values = [user.name, user.email, user.password, user.role];
+    const [result] = await promisePool.query(sql, values);
+    return result.insertId;
   } catch (e) {
-    console.error("error", e.message);
-    throw new Error('sql insert user failed');
+    console.error('error', e.message);
+    throw new Error('sql query failed');
   }
 };
+
+
 
 
 const modifyUser = async (user) => {

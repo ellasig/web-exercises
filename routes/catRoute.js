@@ -33,7 +33,7 @@ router
         body('name').isAlphanumeric().isLength({min: 1, max: 200}),
         body('birthdate').isDate(),
         body('weight').isFloat({min: 0.1, max: 50}),
-        // body('owner').isInt({min: 1}),
+        //body('owner').isInt({min: 1}),
         catController.putCat
     );
 

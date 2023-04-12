@@ -1,13 +1,13 @@
 {
   "name": "bcwt-week2-starter",
   "version": "1.0.0",
-  "description": "",
+  "description": "RESTful api example",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "mattpe",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
